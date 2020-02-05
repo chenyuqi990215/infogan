@@ -31,8 +31,8 @@ def celoss_zero(logits):
     return tf.reduce_mean(loss)
 
 def d_loss_fn(generator,discriminator,batch_z,batch_c,batch_l,batch_x,is_training):
-    fake_image = generator([batch_z,batch_c,batch_l],is_training)
-    d_fake_logits,d_fake_catagory,d_fake_continuous = discriminator([fake_image,batch_c],is_training)
+    fake_image = generator([batch_z, batch_c, batch_l],is_training)
+    d_fake_logits,d_fake_catagory,d_fake_continuous = discriminator([fake_image, batch_c, batch_l],is_training)
     d_fake_loss1 = celoss_zero(d_fake_logits)
     d_fake_loss2 = tf.reduce_mean(d_fake_catagory)
     d_fake_loss3 = tf.reduce_mean(d_fake_continuous)
@@ -43,8 +43,8 @@ def d_loss_fn(generator,discriminator,batch_z,batch_c,batch_l,batch_x,is_trainin
     return d_fake_loss1 + alpha * d_fake_loss2 + alpha * d_fake_loss3 + d_real_loss
 
 def g_loss_fn(generator,discriminator,batch_z,batch_c,batch_l,is_training):
-    fake_image = generator([batch_z, batch_c,batch_l], is_training)
-    d_fake_logits, d_fake_catagory, d_fake_continuous = discriminator([fake_image, batch_c], is_training)
+    fake_image = generator([batch_z, batch_c, batch_l], is_training)
+    d_fake_logits, d_fake_catagory, d_fake_continuous = discriminator([fake_image, batch_c, batch_l], is_training)
     d_fake_loss1 = celoss_one(d_fake_logits)
     d_fake_loss2 = tf.reduce_mean(d_fake_catagory)
     d_fake_loss3 = tf.reduce_mean(d_fake_continuous)
@@ -60,7 +60,7 @@ def train():
     generator = Generator()
     generator.build(input_shape=[(None, z_dim),(None, 10),(None,l_dim)])
     discriminator = Discriminator()
-    discriminator.build(input_shape=[(None, 28, 28, 1),(None, 10)])
+    discriminator.build(input_shape=[(None, 28, 28, 1),(None, 10),(None,l_dim)])
 
     g_optimizer = tf.optimizers.Adam(learning_rate=learning_rate, beta_1=0.5)
     d_optimizer = tf.optimizers.Adam(learning_rate=learning_rate, beta_1=0.5)

@@ -22,7 +22,8 @@ class Generator(keras.Model):
     def call(self, input, training=None, mask=None):
         inputz = input[0]
         inputc = input[1]
-        inputs = tf.concat([inputz,inputc],axis=1)
+        inputl = input[2]
+        inputs = tf.concat([inputz,inputc,inputl],axis=1)
 
         x = self.bn1(self.fc1(inputs),training=training)
         x = self.bn2(self.fc2(x),training=training)
