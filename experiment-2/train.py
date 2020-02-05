@@ -11,15 +11,7 @@ batch_size = 64
 epochs = 1000
 is_training = True
 epochs_d = 3
-epochs_g = 1
 alpha = 1
-beta = 0.05
-
-def asc_epochs_g(epoch):
-    return int(min(epochs_g + beta * epoch,10))
-
-def dsc_epoch_d(epoch):
-    return int(max(epochs_d - beta * epoch,1))
 
 def celoss_one(logits):
     # 由于sigmoid_cross_entropy_with_logits先对logits做sigmoid激活
