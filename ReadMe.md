@@ -19,16 +19,17 @@
 ### **2、参考文献**
 
 #### **2.1 InfoGAN论文**
-InfoGAN: Interpretable Representation Learning by
-Information Maximizing Generative Adversarial
-Nets
+InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets
 **论文地址：**http://arxiv.org/pdf/1606.03657.pdf
+
 **github地址：**https://github.com/JonathanRaiman/tensorflow-infogan
 
 #### **2.2 CSDN博客**
 
 https://blog.csdn.net/wspba/article/details/54808833
+
 https://blog.csdn.net/SuperYR_210/article/details/78444735
+
 https://www.zhuanzhi.ai/document/6ec30facd3512afc993188e5d4be2f62
 
 #### **2.3 其他资料**
