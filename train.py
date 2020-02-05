@@ -11,15 +11,7 @@ batch_size = 64
 epochs = 1000
 is_training = True
 epochs_d = 3
-epochs_g = 1
 alpha = 1
-beta = 0.05
-
-def asc_epochs_g(epoch):
-    return int(min(epochs_g + beta * epoch,10))
-
-def dsc_epoch_d(epoch):
-    return int(max(epochs_d - beta * epoch,1))
 
 def celoss_one(logits):
     # 由于sigmoid_cross_entropy_with_logits先对logits做sigmoid激活
@@ -37,17 +29,16 @@ def celoss_zero(logits):
                                                    labels=tf.zeros_like(logits))
     return tf.reduce_mean(loss)
 
-def d_loss_fn(generator,discriminator,batch_z,batch_c,batch_x,batch_y,is_training):
+def d_loss_fn(generator,discriminator,batch_z,batch_c,batch_x,is_training):
     fake_image = generator([batch_z,batch_c],is_training)
     d_fake_logits,d_fake_loss = discriminator([fake_image,batch_c],is_training)
     d_fake_loss1 = celoss_zero(d_fake_logits)
     d_fake_loss2 = tf.reduce_mean(d_fake_loss)
 
-    d_real_logits,d_real_loss = discriminator([batch_x,batch_y],training=is_training)
-    d_real_loss1 = celoss_one(d_real_logits)
-    d_real_loss2 = tf.reduce_mean(d_real_loss)
+    d_real_logits = discriminator([batch_x,None],training=is_training)
+    d_real_loss = celoss_one(d_real_logits)
 
-    return d_fake_loss1 + alpha * d_fake_loss2 + d_real_loss1 + alpha * d_real_loss2
+    return d_fake_loss1 + alpha * d_fake_loss2 + d_real_loss
 
 def g_loss_fn(generator,discriminator,batch_z,batch_c,is_training):
     fake_image = generator([batch_z, batch_c], is_training)
@@ -84,9 +75,8 @@ def train():
             for epoch_d in range(epochs_d):
                 batch_data = next(data_iter)
                 batch_x = batch_data[0]
-                batch_y = batch_data[1]
                 with tf.GradientTape() as tape:
-                    d_loss = d_loss_fn(generator, discriminator, batch_z, batch_c, batch_x, batch_y, is_training)
+                    d_loss = d_loss_fn(generator, discriminator, batch_z, batch_c, batch_x, is_training)
                 grads = tape.gradient(d_loss, discriminator.trainable_variables)
                 d_optimizer.apply_gradients(zip(grads, discriminator.trainable_variables))
 
