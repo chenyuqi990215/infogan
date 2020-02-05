@@ -2,7 +2,7 @@
 
 ### **1、实验内容**
 
-#### **1.1 实验1（目录experment-1）**
+#### **1.1 实验1（目录experiment-1）**
 
 非监督学习，但没有考虑到continuous latent！
 
