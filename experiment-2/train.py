@@ -98,7 +98,7 @@ def train():
                 c.append(i)
         c = tf.one_hot(tf.convert_to_tensor(c),10)
         fake_image = generator([z, c], training=False)
-        img_path = os.path.join('images-2', 'infogan-%d-final.png' % epoch)
+        img_path = os.path.join('images', 'infogan-%d-final.png' % epoch)
         saver.save_image(fake_image.numpy(), img_path, 10)
 
 if __name__ == "__main__":
