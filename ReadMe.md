@@ -19,6 +19,7 @@
 ### **2、参考文献**
 
 #### **2.1 InfoGAN论文**
+
 InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets
 
 **论文地址：** http://arxiv.org/pdf/1606.03657.pdf
