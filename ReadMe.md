@@ -25,7 +25,7 @@ InfoGAN: Interpretable Representation Learning by Information Maximizing Generat
 
 **github地址：** https://github.com/JonathanRaiman/tensorflow-infogan
 
-#### **2.2 CSDN博客**
+#### **2.2 博客和网络资料**
 
 https://blog.csdn.net/wspba/article/details/54808833
 
