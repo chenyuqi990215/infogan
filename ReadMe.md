@@ -20,9 +20,9 @@
 
 #### **2.1 InfoGAN论文**
 InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets
-**论文地址：**http://arxiv.org/pdf/1606.03657.pdf
+**论文地址：** http://arxiv.org/pdf/1606.03657.pdf
 
-**github地址：**https://github.com/JonathanRaiman/tensorflow-infogan
+**github地址：** https://github.com/JonathanRaiman/tensorflow-infogan
 
 #### **2.2 CSDN博客**
 
@@ -34,4 +34,4 @@ https://www.zhuanzhi.ai/document/6ec30facd3512afc993188e5d4be2f62
 
 #### **2.3 其他资料**
 
-**各种GAN网络结构：**https://github.com/hwalsuklee/tensorflow-generative-model-collections
+**各种GAN网络结构：** https://github.com/hwalsuklee/tensorflow-generative-model-collections
