@@ -80,7 +80,6 @@ def train():
                 batch_c.append(np.random.randint(0,10))
             batch_c = tf.one_hot(tf.convert_to_tensor(batch_c),10)
 
-
             # train D
             for epoch_d in range(epochs_d):
                 batch_data = next(data_iter)
