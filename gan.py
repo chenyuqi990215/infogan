@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
+import numpy as np
 
 class Generator(keras.Model):
     def __init__(self):
@@ -61,9 +62,14 @@ class Discriminator(keras.Model):
 
         self.fc4 = keras.layers.Dense(10)
 
+        self.fc5 = keras.layers.Dense(2)
+
     def call(self,input,training=None,mask=None):
         inputx = input[0]
+
+        # c (category latent) l (continuous latent)
         inputc = input[1]
+        inputl = input[2]
 
         x = tf.nn.leaky_relu(self.conv1(inputx))
         x = tf.nn.leaky_relu(self.bn1(self.conv2(x),training=training))
@@ -73,11 +79,11 @@ class Discriminator(keras.Model):
         x = self.fc1(x)
         logits = self.fc2(x)
 
-        if inputc is None:
+        if (inputc is None) or (inputl is None):
             return logits
 
         x = tf.nn.leaky_relu(self.fc3(x))
-        x = self.fc4(x)
+        categorical_latent = self.fc4(x)
 
         # 注意tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=pred, name=None)！
         # softmax_cross_entropy_with_logits先对logits做softmax，再计算和labels的交叉熵
@@ -87,8 +93,17 @@ class Discriminator(keras.Model):
         # a = y_ * y 这里的乘法是点乘
         # a = tf.reduce_sum(a,axis=1)
         # a = -tf.math.log(a)
-        loss = tf.nn.softmax_cross_entropy_with_logits(labels=inputc,logits=x)
-        return logits,loss
+        loss_category = tf.nn.softmax_cross_entropy_with_logits(labels=inputc,logits=categorical_latent)
+
+        continuous_latent = self.fc5(x)
+
+        # 默认std = 1
+        epsilon = (inputl - continuous_latent)
+
+        loss_continuous = tf.reduce_sum(0.5 * np.log(2 * np.pi) + 0.5 * tf.square(epsilon),axis = 1)
+
+
+        return logits,loss_category,loss_continuous
 
 if __name__ == "__main__":
     g = Generator()
@@ -97,10 +112,13 @@ if __name__ == "__main__":
     x = tf.random.normal([2, 28, 28, 1])
     z = tf.random.normal([2, 64])
     c = tf.one_hot([0,1],10)
+    l = tf.random.normal([2,2])
 
     x_hat = g([z,c])
-    z_hat ,c_hat = d([x,c])
+    z_hat ,c_hat ,l_hat= d([x,c,l])
+    print(l_hat)
 
     print(x_hat.shape)
     print(z_hat.shape)
     print(c_hat.shape)
+    print(l_hat.shape)
