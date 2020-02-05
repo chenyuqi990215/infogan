@@ -102,7 +102,7 @@ def train():
             l = []
             for j in range(10):
                 for k in range(10):
-                    l.append([l/10, k/10])
+                    l.append([l / 10, k / 10])
             l = tf.convert_to_tensor(l)
 
             fake_image = generator([z, c, l], training=False)
