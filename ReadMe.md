@@ -34,6 +34,8 @@ https://blog.csdn.net/SuperYR_210/article/details/78444735
 
 https://www.zhuanzhi.ai/document/6ec30facd3512afc993188e5d4be2f62
 
+https://www.jiqizhixin.com/articles/2018-10-29-21
+
 #### **2.3 其他资料**
 
 **各种GAN网络结构：** https://github.com/hwalsuklee/tensorflow-generative-model-collections
